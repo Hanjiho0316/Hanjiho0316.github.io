@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한지호 | Embedded & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0f;--bg2:#111118;--surface:#16161f;--border:#ffffff12;
+    --text:#e8e8f0;--muted:#7878a0;--accent:#4f6ef7;--accent2:#00e5a0;
+    --accent3:#ff6b6b;--yellow:#f7c948;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-weight:300;overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,var(--bg) 60%,transparent);}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:14px;color:var(--accent2);letter-spacing:2px;}
+  .nav-links{display:flex;gap:32px;}
+  .nav-links a{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+
+  /* HERO */
+  #hero{min-height:100vh;display:grid;place-items:center;position:relative;overflow:hidden;padding:120px 48px 80px;}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 60% 40%,#4f6ef720 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 20% 80%,#00e5a015 0%,transparent 60%);}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black,transparent);opacity:.4;}
+  .hero-content{position:relative;max-width:900px;width:100%;}
+  .hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:3px;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+  .hero-tag::before{content:'';display:block;width:32px;height:1px;background:var(--accent2);}
+  h1{font-family:'DM Serif Display',serif;font-size:clamp(56px,8vw,96px);line-height:.95;letter-spacing:-2px;margin-bottom:24px;}
+  h1 .name-ko{display:block;color:var(--text);}
+  h1 .name-en{display:block;color:var(--muted);font-size:60%;}
+  .hero-desc{font-size:16px;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:48px;}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;}
+  .chip{font-family:'Space Mono',monospace;font-size:11px;padding:6px 14px;border:1px solid var(--border);border-radius:20px;color:var(--muted);background:var(--surface);}
+  .chip.a{border-color:#4f6ef740;color:#8fa8ff;}
+  .chip.b{border-color:#00e5a030;color:#4dffc8;}
+  .chip.c{border-color:#f7c94830;color:#ffd96b;}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:4px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .2s;font-family:'Noto Sans KR',sans-serif;}
+  .btn-primary{background:var(--accent);color:#fff;border:1px solid var(--accent);}
+  .btn-primary:hover{background:#3d5de0;}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .btn-ghost:hover{border-color:#ffffff40;}
+
+  /* SECTIONS */
+  section{padding:100px 48px;max-width:1100px;margin:0 auto;}
+  .section-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+  h2{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);margin-bottom:48px;letter-spacing:-1px;}
+
+  /* PROJECTS GRID */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+  .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-color,var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+  .project-card:hover{border-color:#ffffff20;transform:translateY(-4px);}
+  .project-card:hover::before{transform:scaleX(1);}
+  .project-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:2px;}
+  .project-title{font-size:17px;font-weight:500;margin-bottom:10px;line-height:1.4;}
+  .project-summary{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+  .project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+  .tag{font-family:'Space Mono',monospace;font-size:10px;padding:3px 10px;border-radius:3px;background:#ffffff08;color:var(--muted);border:1px solid var(--border);}
+  .project-link{font-size:12px;color:var(--accent);display:flex;align-items:center;gap:6px;text-decoration:none;font-weight:500;}
+  .project-link::after{content:'→';transition:transform .2s;}
+  .project-card:hover .project-link::after{transform:translateX(4px);}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
+  .skill-group{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+  .skill-group-title{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:2px;margin-bottom:16px;}
+  .skill-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-list li{font-size:12px;padding:5px 12px;background:#ffffff06;border:1px solid var(--border);border-radius:4px;color:var(--text);}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-left:32px;}
+  .timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border);}
+  .timeline-item{position:relative;margin-bottom:40px;}
+  .timeline-item::before{content:'';position:absolute;left:-37px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);}
+  .timeline-date{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:6px;}
+  .timeline-title{font-size:16px;font-weight:500;margin-bottom:4px;}
+  .timeline-org{font-size:13px;color:var(--accent2);margin-bottom:8px;}
+  .timeline-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+
+  /* AWARDS */
+  .awards-list{display:flex;flex-direction:column;gap:12px;}
+  .award-item{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:border-color .2s;}
+  .award-item:hover{border-color:#ffffff25;}
+  .award-name{font-size:14px;font-weight:500;margin-bottom:3px;}
+  .award-badge{font-family:'Space Mono',monospace;font-size:10px;padding:3px 10px;border-radius:20px;white-space:nowrap;margin-left:16px;}
+  .gold{background:#f7c94820;color:#f7c948;border:1px solid #f7c94840;}
+  .silver{background:#ffffff12;color:#bbb;border:1px solid #ffffff20;}
+  .bronze{background:#cd7f3220;color:#cd7f32;border:1px solid #cd7f3240;}
+  .publish{background:#4f6ef720;color:#8fa8ff;border:1px solid #4f6ef740;}
+
+  /* CONTACT */
+  #contact{text-align:center;background:var(--bg2);border-top:1px solid var(--border);padding:100px 48px;max-width:none;margin:0;}
+  .contact-inner{max-width:600px;margin:0 auto;}
+  .contact-email{font-family:'Space Mono',monospace;font-size:clamp(14px,2.5vw,22px);color:var(--accent2);margin:32px 0;word-break:break-all;}
+  .contact-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+  .contact-link{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px;}
+  .contact-link:hover{color:var(--text);}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;z-index:200;background:#000000cc;backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s;}
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;padding:48px;position:relative;transform:translateY(20px) scale(.98);transition:transform .3s;}
+  .modal-overlay.open .modal{transform:translateY(0) scale(1);}
+  .modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1;padding:4px 10px;border-radius:4px;transition:background .2s,color .2s;}
+  .modal-close:hover{background:var(--border);color:var(--text);}
+  .modal-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;}
+  .modal h3{font-family:'DM Serif Display',serif;font-size:clamp(22px,4vw,32px);margin-bottom:8px;letter-spacing:-.5px;}
+  .modal-period{font-size:12px;color:var(--muted);margin-bottom:16px;}
+  .modal-divider{height:1px;background:var(--border);margin:28px 0;}
+  .modal-section-title{font-size:11px;font-weight:500;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-family:'Space Mono',monospace;}
+  .modal-text{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:20px;}
+  .modal-list{list-style:none;margin-bottom:20px;}
+  .modal-list li{font-size:14px;color:var(--muted);line-height:1.85;padding-left:18px;position:relative;margin-bottom:4px;}
+  .modal-list li::before{content:'—';position:absolute;left:0;color:var(--accent2);font-family:'Space Mono',monospace;font-size:11px;top:3px;}
+
+  /* RESULT CARDS */
+  .results-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;}
+  .modal-result{background:#ffffff05;border:1px solid var(--border);border-radius:8px;padding:16px 20px;flex:1;min-width:140px;}
+  .result-val{font-family:'Space Mono',monospace;font-size:22px;color:var(--accent2);font-weight:700;}
+  .result-label{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5;}
+
+  /* ARCH DIAGRAM */
+  .arch-diagram{background:#ffffff04;border:1px solid var(--border);border-radius:10px;padding:24px;margin:16px 0;}
+  .arch-diagram svg{width:100%;height:auto;}
+
+  /* COMPARISON TABLE */
+  .cmp-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+  .cmp-table th{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  .cmp-table td{padding:10px 14px;border-bottom:1px solid #ffffff08;color:var(--text);}
+  .cmp-table tr:last-child td{border-bottom:none;}
+  .cmp-table .highlight{color:var(--accent2);font-weight:500;}
+  .cmp-table .hl-row td{background:#00e5a008;}
+
+  /* FLOW STEPS */
+  .flow-steps{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+  .flow-step{background:#ffffff06;border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;position:relative;flex:1;min-width:120px;}
+  .flow-step-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:4px;}
+  .flow-step-title{font-size:12px;font-weight:500;margin-bottom:2px;}
+  .flow-step-sub{font-size:11px;color:var(--muted);}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .info-box{background:#ffffff04;border:1px solid var(--border);border-radius:8px;padding:16px;}
+  .info-box-title{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:1.5px;margin-bottom:10px;}
+  .info-box p,.info-box li{font-size:12px;color:var(--muted);line-height:1.8;}
+  .info-box ul{list-style:none;padding:0;}
+  .info-box li::before{content:'·';color:var(--accent2);margin-right:6px;}
+
+  /* LOSS CHART */
+  .loss-chart-wrap{background:#ffffff04;border:1px solid var(--border);border-radius:10px;padding:20px;margin:14px 0;}
+  .loss-chart-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px;letter-spacing:1px;}
+  .bar-chart{display:flex;flex-direction:column;gap:10px;}
+  .bar-row{display:flex;align-items:center;gap:10px;}
+  .bar-name{font-size:11px;color:var(--muted);width:100px;flex-shrink:0;}
+  .bar-track{flex:1;background:#ffffff08;border-radius:3px;height:8px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:3px;transition:width 1s ease;}
+  .bar-val{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);width:60px;text-align:right;flex-shrink:0;}
+
+  /* PIN TABLE */
+  .pin-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;}
+  .pin-table th{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;}
+  .pin-table td{padding:8px 12px;border-bottom:1px solid #ffffff06;color:var(--text);}
+  .pin-table tr:last-child td{border-bottom:none;}
+  .pin-code{font-family:'Space Mono',monospace;color:#8fa8ff;font-size:11px;}
+
+  /* CMD TABLE */
+  .cmd-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;}
+  .cmd-table th{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;}
+  .cmd-table td{padding:8px 12px;border-bottom:1px solid #ffffff06;}
+  .cmd-table tr:last-child td{border-bottom:none;}
+  .cmd-key{font-family:'Space Mono',monospace;color:var(--yellow);background:#f7c94812;border:1px solid #f7c94830;border-radius:4px;padding:2px 8px;font-size:12px;}
+  .cmd-name{color:var(--accent2);font-size:12px;}
+  .cmd-desc{color:var(--muted);font-size:12px;}
+
+  /* TROUBLESHOOT */
+  .trouble-list{display:flex;flex-direction:column;gap:12px;margin:12px 0;}
+  .trouble-item{background:#ffffff04;border:1px solid var(--border);border-radius:8px;padding:16px;}
+  .trouble-q{font-size:12px;color:var(--accent3);margin-bottom:6px;display:flex;gap:8px;}
+  .trouble-q::before{content:'Q.';font-family:'Space Mono',monospace;flex-shrink:0;}
+  .trouble-a{font-size:12px;color:var(--muted);display:flex;gap:8px;line-height:1.7;}
+  .trouble-a::before{content:'A.';font-family:'Space Mono',monospace;color:var(--accent2);flex-shrink:0;}
+
+  /* RETRO/REFLECTION */
+  .retro-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+  @media(max-width:560px){.retro-grid{grid-template-columns:1fr;}}
+  .retro-box{background:#ffffff04;border-radius:8px;padding:16px;}
+  .retro-box.good{border:1px solid #00e5a025;}
+  .retro-box.bad{border:1px solid #ff6b6b25;}
+  .retro-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;margin-bottom:10px;}
+  .retro-box.good .retro-title{color:var(--accent2);}
+  .retro-box.bad .retro-title{color:var(--accent3);}
+  .retro-list{list-style:none;padding:0;}
+  .retro-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;margin-bottom:5px;line-height:1.7;}
+  .retro-list li::before{position:absolute;left:0;}
+  .retro-box.good .retro-list li::before{content:'✓';color:var(--accent2);}
+  .retro-box.bad .retro-list li::before{content:'△';color:var(--accent3);}
+
+  .modal::-webkit-scrollbar{width:4px;}
+  .modal::-webkit-scrollbar-track{background:transparent;}
+  .modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+  .fade-in{animation:fadeUp .6s ease forwards;opacity:0;}
+  .fade-in:nth-child(1){animation-delay:.1s;}
+  .fade-in:nth-child(2){animation-delay:.2s;}
+  .fade-in:nth-child(3){animation-delay:.3s;}
+  .fade-in:nth-child(4){animation-delay:.4s;}
+  .fade-in:nth-child(5){animation-delay:.5s;}
+
+  footer{text-align:center;padding:32px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);border-top:1px solid var(--border);}
+
+  @media(max-width:640px){
+    nav{padding:16px 20px;}
+    .nav-links{gap:16px;}
+    section{padding:60px 20px;}
+    #hero{padding:100px 20px 60px;}
+    .modal{padding:28px 16px;}
+    #contact{padding:60px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">HJH.DEV</div>
+  <div class="nav-links">
+    <a href="#projects">프로젝트</a>
+    <a href="#skills">기술</a>
+    <a href="#experience">경력</a>
+    <a href="#contact">연락처</a>
+  </div>
+</nav>
+
+<section id="hero" style="max-width:none;padding-top:0;">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag fade-in">EMBEDDED &amp; AI ENGINEER</div>
+    <h1 class="fade-in">
+      <span class="name-ko">한 지 호</span>
+      <span class="name-en">Han Ji Ho</span>
+    </h1>
+    <p class="hero-desc fade-in">
+      임베디드 시스템과 AI를 융합하는 엔지니어.<br>
+      STM32 저수준 레지스터 제어부터 멀티모달 딥러닝까지,<br>
+      하드웨어와 소프트웨어의 경계를 넘나듭니다.
+    </p>
+    <div class="hero-chips fade-in">
+      <span class="chip a">C/C++ · STM32</span>
+      <span class="chip a">UART / SPI / I2C</span>
+      <span class="chip b">Python · PyTorch</span>
+      <span class="chip b">YOLOv8 · OpenCV</span>
+      <span class="chip c">TOEIC 815</span>
+      <span class="chip c">ADsP</span>
+    </div>
+    <div class="hero-cta fade-in">
+      <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+      <a href="#contact" class="btn btn-ghost">연락하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">PROJECTS</div>
+  <h2>주요 프로젝트</h2>
+  <div class="projects-grid">
+    <div class="project-card" style="--card-color:#4f6ef7;" onclick="openModal('p1')">
+      <div class="project-num">PROJECT 01 · AI / Computer Vision</div>
+      <div class="project-title">멀티모달 기반 실시간<br>운전자 모니터링 시스템</div>
+      <div class="project-summary">Dlib + MediaPipe Feature Fusion으로 졸음을 0.26s 내에 감지. 다양한 조명 환경에서 98.8% 정확도 달성. IICC 2026 논문 발표.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">OpenCV</span><span class="tag">Dlib</span><span class="tag">MediaPipe</span>
+      </div>
+      <a class="project-link" onclick="event.stopPropagation();openModal('p1')">자세히 보기</a>
+    </div>
+    <div class="project-card" style="--card-color:#00e5a0;" onclick="openModal('p2')">
+      <div class="project-num">PROJECT 02 · Medical AI / Research</div>
+      <div class="project-title">CT 슬라이스 기반<br>뼈 특성 분석 모델</div>
+      <div class="project-summary">분할 없이 CT 영상에서 5가지 뼈 특성을 동시 예측하는 End-to-End MTL 모델. Pearson r=0.93 달성. 5종 아키텍처 비교 연구.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">3D CNN</span><span class="tag">Transformer</span><span class="tag">MTL</span>
+      </div>
+      <a class="project-link" onclick="event.stopPropagation();openModal('p2')">자세히 보기</a>
+    </div>
+    <div class="project-card" style="--card-color:#f7c948;" onclick="openModal('p3')">
+      <div class="project-num">PROJECT 03 · AI / Web Service</div>
+      <div class="project-title">AI 기반 투구/타격<br>자세 분석 시스템</div>
+      <div class="project-summary">YOLOv8 Pose + 1D CNN으로 KBO·MLB 선수 폼 유사도 분석. Raspberry Pi 5 + Flask 웹 서비스 배포. ASK 2026 논문 발표.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span><span class="tag">YOLOv8</span><span class="tag">TensorFlow</span><span class="tag">Flask</span><span class="tag">Raspberry Pi</span>
+      </div>
+      <a class="project-link" onclick="event.stopPropagation();openModal('p3')">자세히 보기</a>
+    </div>
+    <div class="project-card" style="--card-color:#ff6b6b;" onclick="openModal('p4')">
+      <div class="project-num">PROJECT 04 · Embedded / Solo</div>
+      <div class="project-title">STM32 임베디드<br>2중 물리 보안 시스템</div>
+      <div class="project-summary">Keypad + LDR 조도센서 2중 인증. HAL 없이 CMSIS 레지스터 직접 제어로 ADC·PWM·UART 드라이버 개발. Fail-Safe 로직 구현.</div>
+      <div class="project-tags">
+        <span class="tag">C/C++</span><span class="tag">STM32</span><span class="tag">UART</span><span class="tag">ADC</span><span class="tag">PWM</span><span class="tag">CMSIS</span>
+      </div>
+      <a class="project-link" onclick="event.stopPropagation();openModal('p4')">자세히 보기</a>
+    </div>
+    <div class="project-card" style="--card-color:#a78bfa;" onclick="openModal('p5')">
+      <div class="project-num">PROJECT 05 · Embedded / IoT</div>
+      <div class="project-title">STM32 4모듈 무선<br>RC카 레이싱 시스템</div>
+      <div class="project-summary">컨트롤러·RC카·스타터·피니셔 4모듈을 블루투스로 연동. 초음파 센서로 0.01s 오차 결승 판정. UART/SPI/I2C 다중 통신 구현.</div>
+      <div class="project-tags">
+        <span class="tag">C/C++</span><span class="tag">STM32</span><span class="tag">Bluetooth</span><span class="tag">SPI</span><span class="tag">I2C</span><span class="tag">PWM</span>
+      </div>
+      <a class="project-link" onclick="event.stopPropagation();openModal('p5')">자세히 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">SKILLS</div>
+  <h2>기술 스택</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">AI &amp; VISION</div>
+      <ul class="skill-list">
+        <li>Python</li><li>PyTorch</li><li>TensorFlow</li><li>YOLOv8</li><li>OpenCV</li><li>MediaPipe</li><li>Dlib</li><li>NumPy</li><li>Pandas</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">EMBEDDED</div>
+      <ul class="skill-list">
+        <li>C/C++</li><li>STM32</li><li>Arduino</li><li>Raspberry Pi</li><li>UART</li><li>SPI</li><li>I2C</li><li>PWM</li><li>ADC</li><li>CMSIS</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">SOFTWARE</div>
+      <ul class="skill-list">
+        <li>Qt/PyQt</li><li>Linux</li><li>Git</li><li>Flask</li><li>SQLite3</li><li>MariaDB</li><li>TCP/IP Socket</li><li>ROS2</li><li>Cloudflare</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">LANGUAGES & CERT</div>
+      <ul class="skill-list">
+        <li>TOEIC 815</li><li>OPIc IH</li><li>ADsP</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">EXPERIENCE</div>
+  <h2>경력 및 활동</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2025.12 — 2026.07</div>
+      <div class="timeline-title">AI 융합 로봇 SW 개발자 2기</div>
+      <div class="timeline-org">대한상공회의소 서울기술교육센터</div>
+      <div class="timeline-desc">AI 기초수학, IOT 임베디드 시스템, AI 컴퓨터 비전, 머신러닝, 영상처리, TOF 깊이 센서 혼합 현실 수업 이수</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2024.09 — 2025.11</div>
+      <div class="timeline-title">학부연구생</div>
+      <div class="timeline-org">인천대학교 Computational Science Lab</div>
+      <div class="timeline-desc">CT 사진을 통한 Cortical·Trabecular 예측 모델 연구 및 머신러닝 학습</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025.02 — 2025.09</div>
+      <div class="timeline-title">학과근로 조교</div>
+      <div class="timeline-org">인천대학교 메카트로닉스공학과</div>
+      <div class="timeline-desc">학과 수업 관련 조교 활동 담당</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2024.02 — 2025.03</div>
+      <div class="timeline-title">파트타임</div>
+      <div class="timeline-org">골프존</div>
+      <div class="timeline-desc">기계 수리, 고객 응대 및 매장 관리, 신입 교육 담당</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2023.05 — 2024.11</div>
+      <div class="timeline-title">프로그래밍 동아리 PINCOM</div>
+      <div class="timeline-org">인천대학교</div>
+      <div class="timeline-desc">프로그래밍 관련 프로젝트 진행 및 기초 문법 학습</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2020.03 — 2026.08</div>
+      <div class="timeline-title">메카트로닉스공학과 (GPA 3.51)</div>
+      <div class="timeline-org">인천대학교</div>
+      <div class="timeline-desc">하드웨어·소프트웨어 융합 공학 전공</div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="section-label">AWARDS &amp; PAPERS</div>
+  <h2>수상 및 논문</h2>
+  <div class="awards-list">
+    <div class="award-item">
+      <div><div class="award-name">마커리스 모션캡쳐 시스템 바이오헬스케어 경진대회</div><div style="font-size:12px;color:var(--muted);">2024.09 · 인천대학교</div></div>
+      <span class="award-badge gold">대상</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">사전 학습된 랜드마크 모델을 활용한 멀티모달 기반 실시간 운전자 모니터링 시스템 개발</div><div style="font-size:12px;color:var(--muted);">2026.04 · IICC 2026 지능정보 및 제어 학술대회</div></div>
+      <span class="award-badge publish">논문 발표</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">YOLOv8n-Pose 모델을 이용한 투구/타격 자세 분석 시스템</div><div style="font-size:12px;color:var(--muted);">2026.05 · 한국정보처리학회 ASK 2026</div></div>
+      <span class="award-badge publish">논문 발표</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">제 19회 인천대학교 창의적 종합 설계 경진대회</div><div style="font-size:12px;color:var(--muted);">2023.09 · 인천대학교</div></div>
+      <span class="award-badge silver">은상</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">제 15회 소외된 이웃과 함께하는 창의설계 경진대회</div><div style="font-size:12px;color:var(--muted);">2023.10</div></div>
+      <span class="award-badge silver">은상</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">성균관대학교 컨소시엄 창의적 종합 설계 경진대회</div><div style="font-size:12px;color:var(--muted);">2023.11</div></div>
+      <span class="award-badge silver">은상</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">인천대학교 자작 전기차 주행 경진대회</div><div style="font-size:12px;color:var(--muted);">2024.09 · 인천대학교</div></div>
+      <span class="award-badge bronze">동상</span>
+    </div>
+    <div class="award-item">
+      <div><div class="award-name">제 39회 경기도 학생 발명품 경진대회 / 2017 청소년 미래상상 기술경진대회</div><div style="font-size:12px;color:var(--muted);">2017.06 / 2017.11</div></div>
+      <span class="award-badge silver">은상 ×2</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="text-align:center;background:var(--bg2);border-top:1px solid var(--border);padding:100px 48px;max-width:none;margin:0;">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center;">CONTACT</div>
+    <h2 style="text-align:center;">함께 만들어 봅시다</h2>
+    <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:24px;">임베디드 시스템, AI/CV 프로젝트, 협업 등 다양한 제안을 환영합니다.</p>
+    <div class="contact-email">skhjh0316@naver.com</div>
+    <div class="contact-links">
+      <a href="https://github.com/Hanjiho0316" target="_blank" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.12.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.74-1.33-1.74-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <span class="contact-link">📞 010-3383-1803</span>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Han Ji Ho · Embedded × AI Engineer</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const modals = {
+
+/* ══════════════════════════════════════════
+   PROJECT 01 — 운전자 모니터링
+══════════════════════════════════════════ */
+p1: `
+<div class="modal-tag">PROJECT 01 · AI / Computer Vision · 2인 프로젝트</div>
+<h3>멀티모달 기반 실시간 운전자 모니터링 시스템</h3>
+<div class="modal-period">2025.02 — 2026.04 &nbsp;|&nbsp; IICC 2026 지능정보 및 제어 학술대회 발표</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+  <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">OpenCV</span>
+  <span class="tag">Dlib</span><span class="tag">MediaPipe</span><span class="tag">Albumentations</span>
+  <span class="tag">Feature Fusion</span><span class="tag">Apple M1 CPU</span>
+</div>
+<div class="modal-divider"></div>
+
+<div class="modal-section-title">개요</div>
+<div class="modal-text">졸음운전은 교통사고의 주요 원인 중 하나로, 기존 귀걸이형·이어폰형 생체신호 센서 방식은 장시간 착용 불편 및 오탐지 문제가 있었습니다. 본 프로젝트는 <strong style="color:var(--text)">비접촉식 카메라 단독</strong>으로 다양한 조명 환경(터널, 야간, 안경 착용)에서도 안정적으로 졸음을 감지하는 시스템을 개발했습니다.</div>
+
+<div class="modal-section-title">시스템 아키텍처</div>
+<div class="arch-diagram">
+  <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="11">
+    <!-- 배경 박스들 -->
+    <rect x="10" y="20" width="120" height="50" rx="6" fill="#4f6ef715" stroke="#4f6ef740" stroke-width="1"/>
+    <text x="70" y="42" text-anchor="middle" fill="#8fa8ff" font-size="10">Eye Image Input</text>
+    <text x="70" y="58" text-anchor="middle" fill="#7878a0" font-size="9">640×480 30FPS</text>
+
+    <rect x="170" y="5" width="120" height="50" rx="6" fill="#4f6ef715" stroke="#4f6ef740" stroke-width="1"/>
+    <text x="230" y="27" text-anchor="middle" fill="#8fa8ff" font-size="10">CNN Feature</text>
+    <text x="230" y="42" text-anchor="middle" fill="#8fa8ff" font-size="10">Extractor (ResNet)</text>
+    <text x="230" y="57" text-anchor="middle" fill="#7878a0" font-size="9">시각적 특징 추출</text>
+
+    <rect x="170" y="75" width="120" height="50" rx="6" fill="#00e5a015" stroke="#00e5a030" stroke-width="1"/>
+    <text x="230" y="97" text-anchor="middle" fill="#4dffc8" font-size="10">Facial Landmarks</text>
+    <text x="230" y="112" text-anchor="middle" fill="#4dffc8" font-size="10">Dlib + MediaPipe</text>
+    <text x="230" y="127" text-anchor="middle" fill="#7878a0" font-size="9">EAR · Head Pose · Gaze</text>
+
+    <rect x="330" y="40" width="120" height="50" rx="6" fill="#f7c94815" stroke="#f7c94840" stroke-width="1"/>
+    <text x="390" y="62" text-anchor="middle" fill="#ffd96b" font-size="10">Feature Fusion</text>
+    <text x="390" y="77" text-anchor="middle" fill="#ffd96b" font-size="10">(Concatenation)</text>
+
+    <rect x="490" y="5" width="120" height="50" rx="6" fill="#ffffff08" stroke="#ffffff15" stroke-width="1"/>
+    <text x="550" y="27" text-anchor="middle" fill="#e8e8f0" font-size="10">Fully Connected</text>
+    <text x="550" y="42" text-anchor="middle" fill="#e8e8f0" font-size="10">Layers</text>
+
+    <rect x="490" y="75" width="120" height="50" rx="6" fill="#ff6b6b15" stroke="#ff6b6b40" stroke-width="1"/>
+    <text x="550" y="97" text-anchor="middle" fill="#ff9898" font-size="10">Drowsiness</text>
+    <text x="550" y="112" text-anchor="middle" fill="#ff9898" font-size="10">Classification</text>
+    <text x="550" y="127" text-anchor="middle" fill="#7878a0" font-size="9">Open / Closed</text>
+
+    <!-- 화살표 -->
+    <line x1="130" y1="45" x2="168" y2="28" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="130" y1="45" x2="168" y2="98" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="290" y1="28" x2="328" y2="55" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="290" y1="98" x2="328" y2="68" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="450" y1="65" x2="488" y2="28" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="610" y1="28" x2="610" y2="73" stroke="#ffffff20" stroke-width="1.5" marker-end="url(#arr)"/>
+    <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffffff30"/></marker></defs>
+
+    <!-- EAR 수식 -->
+    <rect x="10" y="150" width="680" height="55" rx="6" fill="#ffffff04" stroke="#ffffff10" stroke-width="1"/>
+    <text x="20" y="168" fill="#4dffc8" font-size="10" font-family="monospace">EAR (Eye Aspect Ratio)</text>
+    <text x="20" y="185" fill="#7878a0" font-size="10">EAR = (|p2−p6| + |p3−p5|) / (2 × |p1−p4|)</text>
+    <text x="20" y="198" fill="#7878a0" font-size="9">눈이 감길수록 값 감소 → 실시간 처리에 최적, CNN 대비 연산량 대폭 감소</text>
+    <text x="400" y="168" fill="#8fa8ff" font-size="10" font-family="monospace">Head Pose (보조 수단)</text>
+    <text x="400" y="185" fill="#7878a0" font-size="10">Pitch (상하) · Yaw (좌우 회전) · Roll (기울기)</text>
+    <text x="400" y="198" fill="#7878a0" font-size="9">눈 깜빡임만으론 부족 → 기하학적 자세 정보 보완</text>
+  </svg>
+</div>
+
+<div class="modal-section-title">학습 전략 및 하이퍼파라미터</div>
+<div class="two-col">
+  <div class="info-box">
+    <div class="info-box-title">데이터 증강 (Albumentations)</div>
+    <ul><li>터널·빛 반사·야간 조명 시뮬레이션</li><li>Brightness/Contrast 랜덤 조절</li><li>Gaussian Noise, Blur 적용</li><li>다양한 안구 형태 대응을 위한 좌표 정규화</li></ul>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">학습 하이퍼파라미터</div>
+    <ul><li>Epoch: 60</li><li>Learning Rate: 1e-4</li><li>Optimizer: Adam</li><li>Batch Size: 8</li><li>Loss: MSE (회귀) + CrossEntropy (분류)</li></ul>
+  </div>
+</div>
+
+<div class="modal-section-title">학습 결과 (Loss 수렴)</div>
+<div class="loss-chart-wrap">
+  <div class="loss-chart-label">FINAL LOSS VALUES</div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-name">Eye Loss</div>
+      <div class="bar-track"><div class="bar-fill" style="width:15%;background:linear-gradient(to right,#4f6ef7,#8fa8ff);"></div></div>
+      <div class="bar-val">2.04e-4</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-name">Blink Loss</div>
+      <div class="bar-track"><div class="bar-fill" style="width:4%;background:linear-gradient(to right,#00e5a0,#4dffc8);"></div></div>
+      <div class="bar-val">1.43e-7</div>
+    </div>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--muted);">학습 진행에 따라 Train/Validation Loss 모두 수렴 확인 · 과적합 없음</div>
+</div>
+
+<div class="modal-section-title">실험 환경 및 방법</div>
+<div class="modal-text">차량 내부에 해상도 640×480, 30FPS 카메라를 설치하고 약 3.3km 구간에서 10분 이상 연속 주행 테스트를 진행했습니다. 안경 착용, 어두운 주차장 출발, 밝은 외부 도로 등 다양한 조명 조건을 포함하였으며, Apple M1 칩셋 CPU 기반 환경에서 수행했습니다.</div>
+
+<div class="modal-section-title">모델 성능 비교</div>
+<table class="cmp-table">
+  <thead><tr><th>모델</th><th>정확도</th><th>반응 속도</th><th>특징</th></tr></thead>
+  <tbody>
+    <tr><td>Dlib (Base)</td><td>98.0%</td><td>0.17s</td><td>빠르나 조명 변화에 취약</td></tr>
+    <tr><td>MediaPipe (Base)</td><td>99.2%</td><td>0.33s ⚠️</td><td>정확하나 목표 속도 미달</td></tr>
+    <tr class="hl-row"><td><strong class="highlight">제안 모델 (Fusion)</strong></td><td class="highlight">98.8%</td><td class="highlight">0.26s ✓</td><td>두 모델의 장점 결합</td></tr>
+  </tbody>
+</table>
+
+<div class="results-row">
+  <div class="modal-result"><div class="result-val">98.8%</div><div class="result-label">최종 정확도<br>(Dlib 대비 +0.8%p)</div></div>
+  <div class="modal-result"><div class="result-val">0.26s</div><div class="result-label">평균 반응 속도<br>(목표 0.3s 이내 달성)</div></div>
+  <div class="modal-result"><div class="result-val">98%↑</div><div class="result-label">어두운 주차장 환경<br>눈 감지 안정성</div></div>
+  <div class="modal-result"><div class="result-val">330회</div><div class="result-label">10분 주행 중<br>평균 눈 깜빡임 횟수</div></div>
+</div>
+
+<div class="modal-divider"></div>
+<div class="modal-section-title">회고</div>
+<div class="retro-grid">
+  <div class="retro-box good">
+    <div class="retro-title">뜻 깊은 점</div>
+    <ul class="retro-list">
+      <li>멀티모달 특징 결합으로 실환경 강건성 확보</li>
+      <li>학술대회 발표를 통한 기술 가치 검증</li>
+      <li>Apple M1 실시간 연산 최적화 경험</li>
+    </ul>
+  </div>
+  <div class="retro-box bad">
+    <div class="retro-title">아쉬운 점 / 향후 계획</div>
+    <ul class="retro-list">
+      <li>격한 머리 움직임 시 랜드마크 손실 보정 로직 필요</li>
+      <li>안경 빛 반사 특수 상황 데이터 추가 확보 필요</li>
+      <li>온디바이스 NPU 환경 양자화 모델 설계 예정</li>
+    </ul>
+  </div>
+</div>
+`,
+
+/* ══════════════════════════════════════════
+   PROJECT 02 — CT 뼈 분석
+══════════════════════════════════════════ */
+p2: `
+<div class="modal-tag">PROJECT 02 · Medical AI / Research · 2인 프로젝트</div>
+<h3>CT 슬라이스 기반 Trabecular &amp; Cortical 뼈 특성 분석</h3>
+<div class="modal-period">2024.08 — 2025.11 &nbsp;|&nbsp; 인천대학교 Computational Science Lab</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+  <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">3D CNN</span>
+  <span class="tag">Swin Transformer</span><span class="tag">ViT+LSTM</span><span class="tag">CNN+Transformer</span><span class="tag">MTL</span>
+</div>
+<div class="modal-divider"></div>
+
+<div class="modal-section-title">개요</div>
+<div class="modal-text">뼈의 강도는 골밀도(BMD)만으론 완전히 평가할 수 없습니다. 피질골(Cortical)과 소주골(Trabecular)의 미세구조적 특성을 함께 분석해야 약물 반응이나 질병 상태를 정확히 이해할 수 있습니다. 기존의 수동 분석은 전문가 의존적이고 시간이 오래 걸리며 비일관적인 문제가 있었습니다. 본 연구는 <strong style="color:var(--text)">분할(Segmentation) 과정 없이</strong> CT 영상에서 5가지 뼈 특성을 동시에 예측하는 End-to-End MTL 모델을 제안합니다.</div>
+
+<div class="modal-section-title">데이터셋</div>
+<div class="two-col">
+  <div class="info-box">
+    <div class="info-box-title">Cortical Bone</div>
+    <ul><li>데이터 타입: Mouse Femur μCT Images</li><li>샘플 수: 152개</li><li>샘플당 레이어: 51개</li><li>총 이미지: 7,752장 (152×51)</li></ul>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">Trabecular Bone</div>
+    <ul><li>데이터 타입: Mouse Femur μCT Images</li><li>샘플 수: 141개</li><li>샘플당 레이어: 81개</li><li>총 이미지: 11,421장 (141×81)</li></ul>
+  </div>
+</div>
+
+<div class="modal-section-title">전처리 파이프라인</div>
+<div class="flow-steps">
+  <div class="flow-step"><div class="flow-step-num">STEP 1</div><div class="flow-step-title">이미지 리사이징</div><div class="flow-step-sub">모든 이미지 224×224로 일괄 조정 (GPU 메모리 누수 방지)</div></div>
+  <div class="flow-step"><div class="flow-step-num">STEP 2</div><div class="flow-step-title">Center of Mass Alignment</div><div class="flow-step-sub">피질골 첫 번째 슬라이스 기준 Z축 무게중심 정렬 → 위치 변화에 강건한 학습</div></div>
+  <div class="flow-step"><div class="flow-step-num">STEP 3</div><div class="flow-step-title">K-Fold 분할</div><div class="flow-step-sub">Stratified K-Fold (k=5) 적용, 클래스 분포 유지하며 정밀 검증</div></div>
+</div>
+
+<div class="modal-section-title">5종 모델 아키텍처 비교</div>
+<table class="cmp-table">
+  <thead><tr><th>모델</th><th>핵심 구조</th><th>기대 장점</th></tr></thead>
+  <tbody>
+    <tr><td>3D CNN</td><td>3D Conv로 전체 볼륨 처리</td><td>슬라이스 간 연속 구조 포착</td></tr>
+    <tr><td>2D CNN + LSTM</td><td>CNN 공간특징 + LSTM 순차학습</td><td>3D CNN 대비 메모리 효율</td></tr>
+    <tr><td>Swin Transformer</td><td>Shifted Window 3D Transformer</td><td>장거리 의존성 모델링</td></tr>
+    <tr><td>ViT + LSTM</td><td>ViT 전역 특징 + LSTM 연결</td><td>단면 맥락 + 슬라이스 관계</td></tr>
+    <tr><td>CNN + Transformer</td><td>CNN 특징 + Transformer Encoder</td><td>Self-Attention 전체 슬라이스 분석</td></tr>
+  </tbody>
+</table>
+
+<div class="modal-section-title">MTL 아키텍처 (Shared Backbone)</div>
+<div class="arch-diagram">
+  <svg viewBox="0 0 640 130" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="11">
+    <rect x="10" y="40" width="100" height="50" rx="6" fill="#ffffff08" stroke="#ffffff18" stroke-width="1"/>
+    <text x="60" y="62" text-anchor="middle" fill="#e8e8f0" font-size="10">3D CT Scan</text>
+    <text x="60" y="78" text-anchor="middle" fill="#7878a0" font-size="9">Input Volume</text>
+
+    <rect x="150" y="40" width="120" height="50" rx="6" fill="#4f6ef715" stroke="#4f6ef750" stroke-width="1"/>
+    <text x="210" y="62" text-anchor="middle" fill="#8fa8ff" font-size="10">Shared Backbone</text>
+    <text x="210" y="78" text-anchor="middle" fill="#7878a0" font-size="9">CNN / Transformer</text>
+
+    <rect x="320" y="5" width="110" height="38" rx="6" fill="#00e5a010" stroke="#00e5a030" stroke-width="1"/>
+    <text x="375" y="20" text-anchor="middle" fill="#4dffc8" font-size="9">Head 1</text>
+    <text x="375" y="35" text-anchor="middle" fill="#7878a0" font-size="9">Tissue Volume</text>
+
+    <rect x="320" y="51" width="110" height="38" rx="6" fill="#00e5a010" stroke="#00e5a030" stroke-width="1"/>
+    <text x="375" y="66" text-anchor="middle" fill="#4dffc8" font-size="9">Head 2</text>
+    <text x="375" y="81" text-anchor="middle" fill="#7878a0" font-size="9">Bone Volume</text>
+
+    <rect x="320" y="97" width="110" height="28" rx="6" fill="#00e5a010" stroke="#00e5a030" stroke-width="1"/>
+    <text x="375" y="115" text-anchor="middle" fill="#4dffc8" font-size="9">Head 3~5 (BV/TV, Surf.×2)</text>
+
+    <rect x="478" y="5" width="80" height="120" rx="6" fill="#f7c94810" stroke="#f7c94840" stroke-width="1"/>
+    <text x="518" y="40" text-anchor="middle" fill="#ffd96b" font-size="9">Diversity</text>
+    <text x="518" y="55" text-anchor="middle" fill="#ffd96b" font-size="9">Loss</text>
+    <text x="518" y="78" text-anchor="middle" fill="#7878a0" font-size="8">예측 헤드 간</text>
+    <text x="518" y="91" text-anchor="middle" fill="#7878a0" font-size="8">과상관 방지</text>
+
+    <line x1="110" y1="65" x2="148" y2="65" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="270" y1="50" x2="318" y2="22" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="270" y1="65" x2="318" y2="65" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="270" y1="80" x2="318" y2="108" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <line x1="430" y1="65" x2="476" y2="65" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr2)"/>
+    <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffffff30"/></marker></defs>
+  </svg>
+</div>
+
+<div class="modal-section-title">학습 하이퍼파라미터 (전 모델 공통)</div>
+<div class="two-col">
+  <div class="info-box">
+    <div class="info-box-title">설정값</div>
+    <ul><li>Epoch: 100</li><li>Batch Size: 4</li><li>Learning Rate: 1e-4 → 1e-7 (Cosine Scheduler)</li><li>K-Fold Cross Validation (k=5)</li><li>Loss: MSE (Mean Squared Error)</li></ul>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">검증 지표</div>
+    <ul><li>Pearson 상관계수 (목표: 0.9 이상)</li><li>P-value (통계적 유의성 검증)</li><li>Train / Validation Loss 수렴 확인</li></ul>
+  </div>
+</div>
+
+<div class="modal-section-title">소주골(Trabecular) 실험 결과 — Pearson 상관계수</div>
+<table class="cmp-table">
+  <thead><tr><th>모델</th><th>Tissue Vol.</th><th>Bone Vol.</th><th>BV/TV</th><th>Tissue Surf.</th><th>Bone Surf.</th></tr></thead>
+  <tbody>
+    <tr class="hl-row"><td><strong class="highlight">3D CNN</strong></td><td class="highlight">0.8658</td><td class="highlight">0.9354</td><td class="highlight">0.9168</td><td>0.7285</td><td>0.9011</td></tr>
+    <tr><td>CNN-Transformer</td><td>0.7889</td><td>0.9129</td><td>0.8984</td><td class="highlight">0.6373</td><td>0.8915</td></tr>
+    <tr class="hl-row"><td><strong class="highlight">ViT-LSTM</strong></td><td class="highlight">0.8690</td><td class="highlight">0.9303</td><td class="highlight">0.9115</td><td>0.6177</td><td>0.8847</td></tr>
+    <tr><td>2D CNN-LSTM</td><td>0.6664</td><td>0.8021</td><td>0.7749</td><td>0.5417</td><td>0.7844</td></tr>
+    <tr><td>Swin3D</td><td>0.7660</td><td>0.7578</td><td>0.7217</td><td>0.4589</td><td>0.7263</td></tr>
+  </tbody>
+</table>
+
+<div class="results-row">
+  <div class="modal-result"><div class="result-val">r=0.93</div><div class="result-label">소주골 Bone Volume<br>(3D CNN, ViT+LSTM)</div></div>
+  <div class="modal-result"><div class="result-val">5가지</div><div class="result-label">동시 예측 뼈 특성<br>파라미터 수</div></div>
+  <div class="modal-result"><div class="result-val">p≪0.01</div><div class="result-label">모든 핵심 지표<br>통계적 유의성 확보</div></div>
+</div>
+
+<div class="modal-divider"></div>
+<div class="modal-section-title">회고</div>
+<div class="retro-grid">
+  <div class="retro-box good">
+    <div class="retro-title">뜻 깊은 점</div>
+    <ul class="retro-list">
+      <li>복잡한 의료 영상 분석을 단일 모델로 대체 가능성 제시</li>
+      <li>Pearson r=0.93 높은 상관관계 도출</li>
+      <li>최신 비전 기술의 의료 도메인 적용 경험</li>
+    </ul>
+  </div>
+  <div class="retro-box bad">
+    <div class="retro-title">아쉬운 점 / 향후 계획</div>
+    <ul class="retro-list">
+      <li>피질골 샘플 부족으로 과적합 현상 발생</li>
+      <li>뼈 표면적(Surface) 파라미터 오차 개선 필요</li>
+      <li>대규모 데이터셋 확보 및 사전학습 도입 계획</li>
+    </ul>
+  </div>
+</div>
+`,
+
+/* ══════════════════════════════════════════
+   PROJECT 03 — 야구 폼 분석
+══════════════════════════════════════════ */
+p3: `
+<div class="modal-tag">PROJECT 03 · AI / Web Service · 4인 프로젝트</div>
+<h3>AI 기반 투구 및 타격 자세 분석 시스템</h3>
+<div class="modal-period">2026.04 &nbsp;|&nbsp; 한국정보처리학회 ASK 2026 발표</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+  <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">YOLOv8n-Pose</span>
+  <span class="tag">Flask</span><span class="tag">SQLite3</span><span class="tag">Raspberry Pi 5</span><span class="tag">Cloudflare</span>
+</div>
+<div class="modal-divider"></div>
+
+<div class="modal-section-title">개요</div>
+<div class="modal-text">야구의 투구·타격 자세는 스탠스 폭, 골반 회전, 몸통 각도 등 생체역학적 변수가 부상 및 경기력과 직결됩니다. 고가의 전문 장비 없이 일반 영상으로 KBO·MLB 프로 선수(투수 71클래스, 타자 58클래스)와 유사도를 분석하고 개선 방향을 피드백하는 웹 서비스입니다.</div>
+
+<div class="modal-section-title">시스템 아키텍처</div>
+<div class="arch-diagram">
+  <svg viewBox="0 0 680 110" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="10">
+    <rect x="10" y="30" width="80" height="50" rx="6" fill="#ffffff08" stroke="#ffffff15" stroke-width="1"/>
+    <text x="50" y="52" text-anchor="middle" fill="#e8e8f0">USER</text>
+    <text x="50" y="67" text-anchor="middle" fill="#7878a0" font-size="9">영상 업로드</text>
+
+    <rect x="130" y="10" width="100" height="90" rx="6" fill="#4f6ef715" stroke="#4f6ef740" stroke-width="1"/>
+    <text x="180" y="30" text-anchor="middle" fill="#8fa8ff">Web Client</text>
+    <text x="180" y="46" text-anchor="middle" fill="#7878a0" font-size="9">JS / HTML / CSS</text>
+    <text x="180" y="60" text-anchor="middle" fill="#7878a0" font-size="9">Polling 방식</text>
+    <text x="180" y="75" text-anchor="middle" fill="#7878a0" font-size="9">진행 상황 확인</text>
+
+    <rect x="270" y="10" width="110" height="90" rx="6" fill="#f7c94815" stroke="#f7c94840" stroke-width="1"/>
+    <text x="325" y="30" text-anchor="middle" fill="#ffd96b">Web Server</text>
+    <text x="325" y="46" text-anchor="middle" fill="#7878a0" font-size="9">Flask (비동기)</text>
+    <text x="325" y="62" text-anchor="middle" fill="#7878a0" font-size="9">SQLite3 DB</text>
+    <text x="325" y="78" text-anchor="middle" fill="#7878a0" font-size="9">SQLAlchemy</text>
+
+    <rect x="420" y="10" width="130" height="90" rx="6" fill="#00e5a015" stroke="#00e5a030" stroke-width="1"/>
+    <text x="485" y="30" text-anchor="middle" fill="#4dffc8">Raspberry Pi 5</text>
+    <text x="485" y="48" text-anchor="middle" fill="#7878a0" font-size="9">YOLOv8n-Pose</text>
+    <text x="485" y="62" text-anchor="middle" fill="#7878a0" font-size="9">TensorFlow 모델</text>
+    <text x="485" y="76" text-anchor="middle" fill="#7878a0" font-size="9">투수·타자 분류기</text>
+
+    <rect x="590" y="30" width="80" height="50" rx="6" fill="#ff6b6b15" stroke="#ff6b6b40" stroke-width="1"/>
+    <text x="630" y="52" text-anchor="middle" fill="#ff9898">Cloudflare</text>
+    <text x="630" y="67" text-anchor="middle" fill="#7878a0" font-size="9">터널링</text>
+
+    <line x1="90" y1="55" x2="128" y2="55" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="230" y1="55" x2="268" y2="55" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="380" y1="55" x2="418" y2="55" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <line x1="550" y1="55" x2="588" y2="55" stroke="#ffffff25" stroke-width="1.5" marker-end="url(#arr3)"/>
+    <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffffff30"/></marker></defs>
+  </svg>
+</div>
+
+<div class="modal-section-title">YOLOv8 vs MediaPipe 비교 선정</div>
+<table class="cmp-table">
+  <thead><tr><th>항목</th><th>MediaPipe</th><th>YOLOv8n-Pose (채택)</th></tr></thead>
+  <tbody>
+    <tr><td>깊이(Z축) 데이터</td><td>제공</td><td>미제공</td></tr>
+    <tr><td>관절 가림 처리</td><td>❌ 결측치 발생</td><td class="highlight">✓ 신뢰도 추론으로 추정</td></tr>
+    <tr><td>프레임 간 노이즈</td><td>상대적으로 높음</td><td class="highlight">상대적으로 낮음</td></tr>
+    <tr><td>학습 목표 성능 달성</td><td>❌ 미달</td><td class="highlight">✓ 달성</td></tr>
+  </tbody>
+</table>
+
+<div class="modal-section-title">데이터 추출 파이프라인</div>
+<div class="flow-steps">
+  <div class="flow-step"><div class="flow-step-num">STEP 1</div><div class="flow-step-title">영상 입력</div><div class="flow-step-sub">스포츠 중계 각도 투구/타격 영상</div></div>
+  <div class="flow-step"><div class="flow-step-num">STEP 2</div><div class="flow-step-title">관절 감지</div><div class="flow-step-sub">YOLOv8n → YOLOv8n-Pose 17개 랜드마크 중 13개 선택</div></div>
+  <div class="flow-step"><div class="flow-step-num">STEP 3</div><div class="flow-step-title">정규화</div><div class="flow-step-sub">Hip-centering: 골반 중점으로 좌표 기준화 (카메라 각도 제거)</div></div>
+  <div class="flow-step"><div class="flow-step-num">STEP 4</div><div class="flow-step-title">텐서 구성</div><div class="flow-step-sub">(60, 13, 4) 다차원 배열 → CSV 저장</div></div>
+</div>
+
+<div class="modal-section-title">모델 설계</div>
+<div class="two-col">
+  <div class="info-box">
+    <div class="info-box-title">투수 모델 (Pitcher)</div>
+    <ul><li>Conv1D(256) → BN → Spatial Dropout → MaxPool</li><li>Conv1D(128) → Conv1D(64) → GAP → Output</li><li>LR: 3e-4 / Batch: 64 / Epoch: 300</li><li>투구 시작 기준: 무릎-골반 거리 임계값</li></ul>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">타자 모델 (Hitter)</div>
+    <ul><li>Conv1D → Residual Block (Skip Connection) 추가</li><li>프레임 간 변화 적어 Skip으로 정보 손실 방지</li><li>LR: 2e-4 / Batch: 64 / Epoch: 1000</li><li>Stratified K-Fold + Label Smoothing + L2 정규화</li></ul>
+  </div>
+</div>
+
+<div class="modal-section-title">서비스 기능</div>
+<div class="flow-steps">
+  <div class="flow-step"><div class="flow-step-num">기능 1</div><div class="flow-step-title">유사도 분석</div><div class="flow-step-sub">가장 폼이 유사한 프로 선수 및 일치 점수 제공</div></div>
+  <div class="flow-step"><div class="flow-step-num">기능 2</div><div class="flow-step-title">운동학적 피드백</div><div class="flow-step-sub">어깨 기울기 · 스탠스 폭 · 팔 스윙 반경 3가지 변인 비교</div></div>
+  <div class="flow-step"><div class="flow-step-num">기능 3</div><div class="flow-step-title">명예의 전당</div><div class="flow-step-sub">유저 간 유사도 랭킹 시스템</div></div>
+  <div class="flow-step"><div class="flow-step-num">기능 4</div><div class="flow-step-title">고스트 배틀</div><div class="flow-step-sub">실시간 피드 대결 및 분석 카드 다운로드</div></div>
+</div>
+
+<div class="results-row">
+  <div class="modal-result"><div class="result-val">96.5%</div><div class="result-label">투수 모델 정확도<br>(F1: 95.12)</div></div>
+  <div class="modal-result"><div class="result-val">94.1%</div><div class="result-label">타자 모델 정확도<br>(F1: 91.85)</div></div>
+  <div class="modal-result"><div class="result-val">129개</div><div class="result-label">학습 선수 클래스<br>(투수 71 + 타자 58)</div></div>
+</div>
+
+<div class="modal-divider"></div>
+<div class="modal-section-title">회고</div>
+<div class="retro-grid">
+  <div class="retro-box good">
+    <div class="retro-title">뜻 깊은 점</div>
+    <ul class="retro-list">
+      <li>시계열 변화량 분석 AI 로직 성공적 구축</li>
+      <li>Flask 비동기 처리로 실서비스 수준 성능 확보</li>
+      <li>학술대회 발표를 통해 실용성 인정</li>
+    </ul>
+  </div>
+  <div class="retro-box bad">
+    <div class="retro-title">아쉬운 점 / 향후 계획</div>
+    <ul class="retro-list">
+      <li>프로 선수 데이터 부족으로 다양성 확보 필요</li>
+      <li>Polling → WebSocket 실시간 통신 도입 검토</li>
+      <li>DTW 알고리즘으로 타이밍 차이 동작 비교 개선 예정</li>
+    </ul>
+  </div>
+</div>
+`,
+
+/* ══════════════════════════════════════════
+   PROJECT 04 — 보안 시스템
+══════════════════════════════════════════ */
+p4: `
+<div class="modal-tag">PROJECT 04 · Embedded / Solo · 개인 프로젝트</div>
+<h3>STM32 임베디드 2중 물리 보안 시스템</h3>
+<div class="modal-period">2026.04 &nbsp;|&nbsp; STM32F411RE · CMSIS 레지스터 직접 제어</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+  <span class="tag">C/C++</span><span class="tag">STM32F411RE</span><span class="tag">CMSIS</span>
+  <span class="tag">UART</span><span class="tag">ADC</span><span class="tag">PWM</span><span class="tag">GPIO</span>
+</div>
+<div class="modal-divider"></div>
+
+<div class="modal-section-title">개요</div>
+<div class="modal-text">자동화 환경에서 모터 제어의 안전성과 신뢰성을 확보하기 위해 STM32F411RE를 사용, <strong style="color:var(--text)">HAL 라이브러리 없이 CMSIS 레지스터를 직접 제어</strong>하여 ADC·PWM·UART 드라이버를 개발했습니다. 물리적 보안(Keypad)과 환경적 보안(조도 센서) 2중 인증이 모두 충족될 때만 시스템이 잠금 해제됩니다.</div>
+
+<div class="modal-section-title">2중 인증 흐름</div>
+<div class="flow-steps">
+  <div class="flow-step"><div class="flow-step-num">1단계</div><div class="flow-step-title">Keypad 비밀번호</div><div class="flow-step-sub">4×4 Matrix 스캔 방식, 4자리 PIN 인증</div></div>
+  <div class="flow-step"><div class="flow-step-num">2단계</div><div class="flow-step-title">LDR 조도 센서</div><div class="flow-step-sub">ADC1_IN9로 특정 광량 임계값 감지 인증</div></div>
+  <div class="flow-step"><div class="flow-step-num">성공</div><div class="flow-step-title">모터 제어 활성화</div><div class="flow-step-sub">UART 명령어로 DC 모터 방향·속도 제어</div></div>
+  <div class="flow-step"><div class="flow-step-num">비상</div><div class="flow-step-title">Fail-Safe 작동</div><div class="flow-step-sub">'s' 명령 또는 조도 임계 이하 → 즉시 재잠금, 권한 회수</div></div>
+</div>
+
+<div class="modal-section-title">하드웨어 핀 매핑</div>
+<table class="pin-table">
+  <thead><tr><th>기능</th><th>핀 (Pin)</th><th>비고</th></tr></thead>
+  <tbody>
+    <tr><td>LDR 조도 센서</td><td><span class="pin-code">PB1</span></td><td>ADC1_IN9, Voltage Divider 회로 (10kΩ)</td></tr>
+    <tr><td>Keypad</td><td><span class="pin-code">PC0-PC2, PC4-PC8</span></td><td>4×4 Matrix 스캔 방식</td></tr>
+    <tr><td>DC Motor</td><td><span class="pin-code">PA1, PA5, PA6</span></td><td>PWM 및 방향 제어</td></tr>
+    <tr><td>Debug UART</td><td><span class="pin-code">PA2, PA3</span></td><td>UART2 115200bps Serial 통신</td></tr>
+  </tbody>
+</table>
+
+<div class="modal-section-title">UART 제어 명령어</div>
+<table class="cmd-table">
+  <thead><tr><th>명령어</th><th>기능</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td><span class="cmd-key">f</span></td><td><span class="cmd-name">Forward</span></td><td class="cmd-desc">모터 정회전 시작</td></tr>
+    <tr><td><span class="cmd-key">r</span></td><td><span class="cmd-name">Reverse</span></td><td class="cmd-desc">모터 역회전 시작</td></tr>
+    <tr><td><span class="cmd-key">s</span></td><td><span class="cmd-name">Stop &amp; Lock</span></td><td class="cmd-desc">모터 정지 + 즉시 시스템 재잠금 (Fail-Safe)</td></tr>
+    <tr><td><span class="cmd-key">1~9</span></td><td><span class="cmd-name">Speed Set</span></td><td class="cmd-desc">모터 속도 단계 설정 (1: 저속 ~ 9: 고속)</td></tr>
+  </tbody>
+</table>
+
+<div class="modal-section-title">트러블 슈팅</div>
+<div class="trouble-list">
+  <div class="trouble-item">
+    <div class="trouble-q">PA2(UART TX) ↔ ADC 핀 충돌 문제</div>
+    <div class="trouble-a">ADC 입력 핀을 PB1(ADC1_IN9)으로 이전하여 UART TX와 ADC 데이터 경로를 완전히 분리, 독립성 확보</div>
+  </div>
+  <div class="trouble-item">
+    <div class="trouble-q">LDR ADC 값이 4095로 고정되는 현상</div>
+    <div class="trouble-a">10kΩ 저항과 LDR을 이용한 전압 분배(Voltage Divider) 회로를 구성하여 빛의 양에 따른 아날로그 전압 변화 정상 반영</div>
+  </div>
+</div>
+
+<div class="results-row">
+  <div class="modal-result"><div class="result-val">100%</div><div class="result-label">전 파트 독자 개발<br>(회로 설계 + 펌웨어)</div></div>
+  <div class="modal-result"><div class="result-val">0ms</div><div class="result-label">HAL 라이브러리<br>오버헤드 (직접 제어)</div></div>
+  <div class="modal-result"><div class="result-val">2-Factor</div><div class="result-label">물리(PW) + 환경(광량)<br>이중 인증 구현</div></div>
+</div>
+
+<div class="modal-divider"></div>
+<div class="modal-section-title">회고</div>
+<div class="retro-grid">
+  <div class="retro-box good">
+    <div class="retro-title">뜻 깊은 점</div>
+    <ul class="retro-list">
+      <li>레지스터 직접 제어로 MCU 저수준 아키텍처 깊이 이해</li>
+      <li>물리 센서 + 소프트웨어 로직 결합 보안 솔루션 구현</li>
+      <li>회로 설계~펌웨어 전 과정 독자 리딩</li>
+    </ul>
+  </div>
+  <div class="retro-box bad">
+    <div class="retro-title">아쉬운 점 / 향후 계획</div>
+    <ul class="retro-list">
+      <li>인증 실패 시 시도 횟수 제한 로직 보완 필요</li>
+      <li>LCD 디스플레이로 사용자 UI 강화 필요</li>
+      <li>UART 명령 암호화 및 Bluetooth 무선 통신 확장 예정</li>
+    </ul>
+  </div>
+</div>
+`,
+
+/* ══════════════════════════════════════════
+   PROJECT 05 — RC카 레이싱
+══════════════════════════════════════════ */
+p5: `
+<div class="modal-tag">PROJECT 05 · Embedded / IoT · 4인 프로젝트 (PM 담당)</div>
+<h3>STM32 4모듈 무선 RC카 레이싱 시스템</h3>
+<div class="modal-period">2026.04 &nbsp;|&nbsp; STM32F411xE (NUCLEO-64) × 4보드</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+  <span class="tag">C/C++</span><span class="tag">STM32F411RE</span><span class="tag">HC-05 BT</span>
+  <span class="tag">UART</span><span class="tag">SPI</span><span class="tag">I2C</span><span class="tag">PWM</span><span class="tag">ADC</span>
+</div>
+<div class="modal-divider"></div>
+
+<div class="modal-section-title">시스템 구성 — 4개 모듈</div>
+<div class="flow-steps">
+  <div class="flow-step"><div class="flow-step-num">모듈 1</div><div class="flow-step-title">컨트롤러</div><div class="flow-step-sub">HC-05 자동 페어링 · 조이스틱 ADC 입력 · I2C LCD 상태 표시</div></div>
+  <div class="flow-step"><div class="flow-step-num">모듈 2</div><div class="flow-step-title">RC카</div><div class="flow-step-sub">BT 명령 수신 · PWM 좌우 차등 제어 · 전방향+대각선 주행</div></div>
+  <div class="flow-step"><div class="flow-step-num">모듈 3</div><div class="flow-step-title">스타터</div><div class="flow-step-sub">조도센서 대기 감지 · 3-2-1 카운트다운 · 부정출발 즉시 경보</div></div>
+  <div class="flow-step"><div class="flow-step-num">모듈 4</div><div class="flow-step-title">피니셔</div><div class="flow-step-sub">초음파 센서 ms 단위 결승 판정 · MAX7219 도트매트릭스 결과 표시</div></div>
+</div>
+
+<div class="modal-section-title">통신 프로토콜 맵</div>
+<table class="pin-table">
+  <thead><tr><th>통신</th><th>사용 위치</th><th>역할</th></tr></thead>
+  <tbody>
+    <tr><td><span class="pin-code">UART (BT)</span></td><td>컨트롤러 ↔ RC카</td><td>조이스틱 명령 송수신 (RXNE 인터럽트)</td></tr>
+    <tr><td><span class="pin-code">I2C</span></td><td>컨트롤러 → 1602 LCD</td><td>통신 상태 및 조작 정보 출력</td></tr>
+    <tr><td><span class="pin-code">SPI</span></td><td>스타터/피니셔 → MAX7219</td><td>도트매트릭스 카운트다운 · 승자 표시</td></tr>
+    <tr><td><span class="pin-code">PWM</span></td><td>RC카 → L298N 드라이버</td><td>좌우 모터 독립 듀티비 제어</td></tr>
+    <tr><td><span class="pin-code">ADC</span></td><td>컨트롤러, 스타터</td><td>조이스틱 X/Y축 · 조도 센서 광량 변환</td></tr>
+  </tbody>
+</table>
+
+<div class="modal-section-title">RC카 주행 로직</div>
+<div class="two-col">
+  <div class="info-box">
+    <div class="info-box-title">Differential Drive 알고리즘</div>
+    <ul><li>8방향 X/Y 좌표 → 좌우 모터 속도 벡터 변환</li><li>좌우 Duty Cycle을 다르게 인가하여 곡선 주행</li><li>대각선 주행 및 제자리 좌/우회전 지원</li><li>Fail-Safe: 통신 끊기면 모터 즉시 정지</li></ul>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title">피니셔 판정 알고리즘</div>
+    <ul><li>양측 레인 초음파 센서 실시간 스캔</li><li>P1/P2 통과 시점 밀리초 단위 비교</li><li>최종 승자 도트매트릭스 실시간 표시</li><li>0.01s 이내 오차 범위 결승 판정</li></ul>
+  </div>
+</div>
+
+<div class="modal-section-title">트러블 슈팅</div>
+<div class="trouble-list">
+  <div class="trouble-item">
+    <div class="trouble-q">블루투스 데이터 병목으로 모터 제어 레이턴시 발생</div>
+    <div class="trouble-a">20ms 주기 폴링 방식에서 UART 수신 인터럽트(RXNE) 기반으로 전환. 데이터 수신 즉시 처리하여 레이턴시 대폭 감소</div>
+  </div>
+  <div class="trouble-item">
+    <div class="trouble-q">모터 방향 급전환 시 역기전력(Back EMF)으로 보드 다운</div>
+    <div class="trouble-a">제어/구동부 전원 라인 분리 + PWM 듀티비를 단계적으로 감속하는 Soft-Stop 알고리즘 적용 → 전기적 충격 완화 및 리셋 방지</div>
+  </div>
+</div>
+
+<div class="results-row">
+  <div class="modal-result"><div class="result-val">10m</div><div class="result-label">블루투스 안정<br>무선 주행 거리</div></div>
+  <div class="modal-result"><div class="result-val">0.01s</div><div class="result-label">초음파 센서<br>결승 판정 오차</div></div>
+  <div class="modal-result"><div class="result-val">3종</div><div class="result-label">통합 통신 규격<br>UART·SPI·I2C</div></div>
+  <div class="modal-result"><div class="result-val">4 MCU</div><div class="result-label">통합 연동<br>시나리오 완수</div></div>
+</div>
+
+<div class="modal-divider"></div>
+<div class="modal-section-title">회고</div>
+<div class="retro-grid">
+  <div class="retro-box good">
+    <div class="retro-title">뜻 깊은 점</div>
+    <ul class="retro-list">
+      <li>다수 모듈 간 유기적 통신 시나리오 완벽 구현</li>
+      <li>UART·SPI·I2C 다양한 통신 실무 수준으로 체득</li>
+      <li>PM으로서 4개 모듈 통합 테스트 리딩 경험</li>
+    </ul>
+  </div>
+  <div class="retro-box bad">
+    <div class="retro-title">아쉬운 점 / 향후 계획</div>
+    <ul class="retro-list">
+      <li>블루투스 장애물 간헐적 Latency 보완 필요</li>
+      <li>장시간 주행 시 배터리 저전력 모드 설계 미흡</li>
+      <li>WiFi 또는 전용 RF 모듈로 교체하여 반경 확장 예정</li>
+    </ul>
+  </div>
+</div>
+`
+};
+
+function openModal(id) {
+  const color = {p1:'#4f6ef7',p2:'#00e5a0',p3:'#f7c948',p4:'#ff6b6b',p5:'#a78bfa'}[id];
+  document.getElementById('modal-body').innerHTML = modals[id];
+  const modal = document.getElementById('modal-content');
+  modal.style.borderTop = `3px solid ${color}`;
+  modal.scrollTop = 0;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(b => {
+      const w = b.style.width; b.style.width = '0';
+      requestAnimationFrame(() => { b.style.width = w; });
+    });
+  }, 200);
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
